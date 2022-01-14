@@ -20,6 +20,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="List.h">
       <Filter>Header Files</Filter>
     </ClInclude>

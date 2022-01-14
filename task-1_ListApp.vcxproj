@@ -150,6 +150,7 @@
     <ClCompile Include="task-1_ListApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="List.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

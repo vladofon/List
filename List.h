@@ -4,67 +4,21 @@ template <class T>
 class List
 {
 public:
-	List();
-	void add(T item);
-	T get(long index);
-private:
-	class Node
-	{
-	public:
-		Node* pNext;
-		T item;
 
-		Node(T item, Node* pNext);
-	};
+	virtual void add(T item) = 0;
 
-	Node* head;
-	long size;
+	virtual void clear() = 0;
+
+	virtual void put(long index, T item) = 0;
+
+	virtual void remove(long index) = 0;
+
+	virtual void merge(List<T>* list) = 0;
+
+	virtual T get(long index) = 0;
+
+	virtual T* toArray() = 0;
+
+	virtual long getSize() = 0;
+
 };
-
-template<class T>
-inline List<T>::List()
-{
-	this->head = nullptr;
-	this->size = 0;
-}
-
-template<class T>
-void List<T>::add(T item)
-{
-	if (head == nullptr)
-	{
-		head = new Node(item, nullptr);
-	}
-	else
-	{
-		Node* current = head;
-
-		while (current->pNext != nullptr) {
-			current = current->pNext;
-		}
-
-		current->pNext = new Node(item, nullptr);
-		size++;
-	}
-}
-
-template<class T>
-inline T List<T>::get(long index)
-{
-	Node* current = head;
-	long counter = 0;
-
-	while (counter != index) {
-		current = current->pNext;
-		counter++;
-	}
-
-	return current->item;
-}
-
-template<class T>
-inline List<T>::Node::Node(T item, Node* pNext)
-{
-	this->pNext = pNext;
-	this->item = item;
-}
