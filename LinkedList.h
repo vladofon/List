@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	void clear() override 
+	void clear() override
 	{
 		while (size != 0)
 		{
@@ -81,7 +81,7 @@ public:
 		}
 	}
 
-	void remove(long index) override 
+	void remove(long index) override
 	{
 		if (index == 0)
 		{
@@ -110,11 +110,11 @@ public:
 		}
 	}
 
-	void merge(List<T>* list) override 
+	void merge(List<T>* list) override
 	{
 		Node* lastElement = lastNode();
 		long counter = 0;
-		
+
 		while (counter < list->getSize() && list->getSize() > 0)
 		{
 			if (lastElement == nullptr)
@@ -123,7 +123,7 @@ public:
 				counter++;
 				size++;
 			}
-			else 
+			else
 			{
 				lastElement->pNext = new Node(list->get(counter), nullptr);
 				lastElement = lastElement->pNext;
@@ -135,8 +135,8 @@ public:
 		delete list;
 	}
 
-	T* toArray() override 
-	{ 
+	T* toArray() override
+	{
 		T* resultArray = new T[size];
 
 		Node* current = head;
@@ -153,6 +153,11 @@ public:
 	}
 
 	long getSize() override
+	{
+		return size;
+	}
+
+	long getCapacity() override
 	{
 		return size;
 	}

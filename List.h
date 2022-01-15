@@ -21,4 +21,6 @@ public:
 
 	virtual long getSize() = 0;
 
+	virtual long getCapacity() = 0;
+
 };
