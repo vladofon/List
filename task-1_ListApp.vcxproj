@@ -151,8 +151,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayList.h" />
+    <ClInclude Include="FencingCompetition.h" />
+    <ClInclude Include="Formatter.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="Pair.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

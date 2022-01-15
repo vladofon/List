@@ -1,5 +1,6 @@
 #pragma once
 #include "List.h"
+#include <malloc.h>
 
 template <class T>
 class LinkedList :public List<T>
@@ -150,6 +151,27 @@ public:
       }
 
       return resultArray;
+   }
+
+   void copy(List<T>& copied) override
+   {
+      long counter = 0;
+
+      while (counter != size)
+      {
+         copied.add(get(counter));
+         counter++;
+      }
+   }
+
+   void addAll(long count, T* items) override
+   {
+      long counter = 0;
+      while (counter != count)
+      {
+         add(items[counter]);
+         counter++;
+      }
    }
 
    long getSize() override

@@ -95,6 +95,26 @@ public:
       return elementData;
    }
 
+   void copy(List<T>& copied) override
+   {
+      long counter = 0;
+
+      while (counter != size)
+      {
+         copied.add(get(counter));
+         counter++;
+      }
+   }
+
+   void addAll(long count, T* items) override
+   {
+      increaseCapacity(count);
+
+      mergeArray(elementData, items, count);
+
+      size += count;
+   }
+
    long getSize() override
    {
       return size;
@@ -130,6 +150,16 @@ private:
       {
          to[i] = from[i];
       }
+   }
+
+   void mergeArray(T* to, T* from, long size)
+   {
+      for (long i = 0; i < size; i++)
+      {
+         to[i + this->size] = from[i];
+      }
+
+      delete[] from;
    }
 
    void extendArraySize()
