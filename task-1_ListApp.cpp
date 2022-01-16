@@ -13,25 +13,31 @@ int main()
    FencingCompetition* competition = new FencingCompetition(5, 2);
 
    List<string>* firstTeam = new LinkedList<string>();
-   firstTeam->addAll(10, new string[10]{
+   firstTeam->addAll(16, new string[16]{
       "f.first","f.second",
       "f.third","f.fourth",
       "f.fifth","f.sixth",
       "f.seventh","f.eighth",
-      "f.ninth","f.tenth" });
+      "f.ninth","f.tenth",
+      "s.eleventh", "s.twelfth",
+      "s.thirteenth", "s.fourteenth",
+      "s.fifteenth", "s.sixteenth" });
 
    List<string>* secondTeam = new LinkedList<string>();
-   secondTeam->addAll(10, new string[10]{
+   secondTeam->addAll(16, new string[16]{
       "s.first", "s.second",
       "s.third", "s.fourth",
       "s.fifth", "s.sixth",
       "s.seventh", "s.eighth",
-      "s.ninth", "s.tenth" });
+      "s.ninth", "s.tenth",
+      "s.eleventh", "s.twelfth",
+      "s.thirteenth", "s.fourteenth",
+      "s.fifteenth", "s.sixteenth" });
 
    competition->setFirstTeam(firstTeam);
-   competition->setFirstTeam(secondTeam);
+   competition->setSecondTeam(secondTeam);
 
-   Formatter* formatter = new Formatter(2, 5);
+   Formatter* formatter = new Formatter(2, 5, "Fencers");
    cout << formatter->format(competition->makeDraw()) << endl;
 
    return 0;

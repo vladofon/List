@@ -24,8 +24,8 @@ public:
       List<Pair>* pairs = new LinkedList<Pair>();
 
       srand(time(0));
-      int n = rand() % maxRange;
-      int m = rand() % maxRange;
+      int n = rand() % maxRange + 1;
+      int m = rand() % maxRange + 1;
 
       for (int i = 0; i < countOfPairs; i++)
       {
@@ -52,11 +52,11 @@ private:
    List<string>* secondTeam;
 
    void validate() {
-      if (firstTeam->getSize() < countOfPairs * maxRange)
+      if (firstTeam->getSize() < (countOfPairs * maxRange) + countOfPairs)
       {
          throw invalid_argument("First team is too small!");
       }
-      if (secondTeam->getSize() < countOfPairs * maxRange)
+      if (secondTeam->getSize() < (countOfPairs * maxRange) + countOfPairs)
       {
          throw invalid_argument("Second team is too small!");
       }

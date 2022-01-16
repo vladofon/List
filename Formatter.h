@@ -10,10 +10,12 @@ using namespace std;
 class Formatter
 {
 public:
-   Formatter(long cols, long rows)
+   Formatter(long cols, long rows, string header)
    {
+      this->header = header;
       this->cols = cols;
       this->rows = rows;
+      this->space = 2;
    }
 
    string format(List<Pair>* pairs)
@@ -25,14 +27,15 @@ public:
       long secondLength = maxCellLength(secondTeamNames);
 
       long cellWidth = (firstLength > secondLength) ? firstLength : secondLength;
+      cellWidth = (cellWidth % 2 == 0) ? cellWidth : cellWidth + 1;
 
-      string table;
+      string table = createHeader(header, cellWidth);
 
       for (long i = 0; i < rows; i++)
       {
          Pair pair = pairs->get(i);
 
-         string row = (i == rows - 1) ? createRow(pair, cellWidth) : createRow(pair, cellWidth, true);
+         string row = (i == rows - 1) ? createRow(pair, cellWidth, true) : createRow(pair, cellWidth);
 
          table += row;
       }
@@ -47,8 +50,10 @@ private:
    const string COL_FILLER = "|";
    const string SPACING = " ";
 
+   string header;
    long cols;
    long rows;
+   long space;
 
    List<string>* parseNames(List<Pair>* pairs, bool isFirstTeam)
    {
@@ -86,9 +91,23 @@ private:
       return width - str.length();
    }
 
+   string createHeader(string text, long cellWidth)
+   {
+      long paddingSpaces = space * cols;
+      long colBorders = (cols - 1);
+      long headerWhitespaces = calcWhiteSpace(text, cellWidth) + paddingSpaces + colBorders;
+      string padding = repeat(SPACING, headerWhitespaces + (space / 2));
+      string headerBody = padding + text + padding;
+      string borderBody = repeat(ROW_FILLER, headerBody.length());
+
+      string border = SEPARATOR + borderBody + SEPARATOR + ROW_SEPARATOR;
+      string header = COL_FILLER + headerBody + COL_FILLER + ROW_SEPARATOR;
+
+      return (border + header);
+   }
+
    string createRow(Pair pair, long cellWidth, bool clossingCell = false)
    {
-      long space = 2; // must be even number
       long paddingSpaces = space * cols;
       long colBorders = (cols - 1);
       string padding = repeat(SPACING, space / 2);
@@ -103,10 +122,11 @@ private:
 
       string leftCell = padding + firstCellContent + padding;
       string rightCell = padding + secondCellContent + padding;
-      string rowBody = leftCell + COL_FILLER + rightCell;
+      string contentBody = leftCell + COL_FILLER + rightCell;
+      string borderBody = repeat(ROW_FILLER, contentBody.length());
 
-      string border = SEPARATOR + repeat(ROW_FILLER, rowBody.length()) + SEPARATOR + ROW_SEPARATOR;
-      string main = COL_FILLER + rowBody + COL_FILLER + ROW_SEPARATOR;
+      string border = SEPARATOR + borderBody + SEPARATOR + ROW_SEPARATOR;
+      string main = COL_FILLER + contentBody + COL_FILLER + ROW_SEPARATOR;
 
       if (clossingCell)
       {
@@ -120,11 +140,15 @@ private:
 
    string repeat(string symbol, long count)
    {
+      string result;
+      if (count != 0)
+         result = symbol;
+
       for (int i = 0; i < count - 1; i++)
       {
-         symbol += symbol;
+         result += symbol;
       }
 
-      return symbol;
+      return result;
    }
 };
