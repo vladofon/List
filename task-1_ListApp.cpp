@@ -14,31 +14,39 @@ int main()
 
    List<string>* firstTeam = new LinkedList<string>();
    firstTeam->addAll(16, new string[16]{
-      "f.first","f.second",
-      "f.third","f.fourth",
-      "f.fifth","f.sixth",
-      "f.seventh","f.eighth",
-      "f.ninth","f.tenth",
-      "s.eleventh", "s.twelfth",
-      "s.thirteenth", "s.fourteenth",
-      "s.fifteenth", "s.sixteenth" });
+      "Edoardo Mangiarotti","Jeon Hee Suk",
+      "Giovanna Trillini","Danuta Dmowska",
+      "Valentina Vezzali","Mihai Covaliu",
+      "Giuseppe Delfino","Johan Harmenberg",
+      "Lucien Gaudin","Marcel Fischer",
+      "Elena Novikova", "Sergei Golubitsky",
+      "Viktor Sidyak", "Norman Armitage",
+      "Stanislav Pozdnyakov", "George Worth" });
 
    List<string>* secondTeam = new LinkedList<string>();
    secondTeam->addAll(16, new string[16]{
-      "s.first", "s.second",
-      "s.third", "s.fourth",
-      "s.fifth", "s.sixth",
-      "s.seventh", "s.eighth",
-      "s.ninth", "s.tenth",
-      "s.eleventh", "s.twelfth",
-      "s.thirteenth", "s.fourteenth",
-      "s.fifteenth", "s.sixteenth" });
+      "Viktor Krovopuskov", "Camillo Agrippa",
+      "Carlo Pavesi", "Francesco Alfieri",
+      "Albert Bogen", "Domenico Angelo",
+      "Ellen Osiier", "Salvator Fabris",
+      "Irina Embrich", "Ridolfo Capo Ferro",
+      "Helene Mayer", "George Silver",
+      "Bob Anderson", "Hans Talhoffer",
+      "Boaz Ellis", "Chevalier de Saint-Georges" });
 
    competition->setFirstTeam(firstTeam);
    competition->setSecondTeam(secondTeam);
 
    Formatter* formatter = new Formatter(2, 5, "Fencers");
-   cout << formatter->format(competition->makeDraw()) << endl;
 
+   List<Pair>* pairs = competition->makeDraw();
+   firstTeam->merge(secondTeam);
+
+   cout << formatter->formatBySchema(firstTeam, pairs) << endl;
+
+
+   /* cout << formatter->format(competition->makeDraw()) << endl;*/
+
+   system("pause");
    return 0;
 }
