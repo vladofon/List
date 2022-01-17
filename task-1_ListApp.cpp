@@ -8,6 +8,12 @@
 
 using namespace std;
 
+void assignIfBigger(long& to, long from)
+{
+   if (from > to)
+      to = from;
+}
+
 int main()
 {
    FencingCompetition* competition = new FencingCompetition(5, 2);
@@ -44,9 +50,10 @@ int main()
 
    cout << formatter->formatBySchema(firstTeam, pairs) << endl;
 
-
    /* cout << formatter->format(competition->makeDraw()) << endl;*/
 
    system("pause");
    return 0;
 }
+
+
