@@ -111,6 +111,16 @@ private:
 
 public:
 
+   void fillColumn(long rowId, long columnId, List<string>* data)
+   {
+      for (long i = 0; i < data->getSize(); i++)
+      {
+         getRow(rowId)
+            .getColumn(columnId)
+            .createCell(data->get(i));
+      }
+   }
+
    Row createRow(string rowName)
    {
       Row newRow = Row(rowName);
@@ -128,4 +138,6 @@ public:
    {
       return rows->getSize();
    }
+
+
 };

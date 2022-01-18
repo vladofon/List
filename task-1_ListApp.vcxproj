@@ -156,7 +156,7 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Pair.h" />
-    <ClInclude Include="SchemaFormater.h" />
+    <ClInclude Include="SchemaFormatter.h" />
     <ClInclude Include="SchemaParser.h" />
     <ClInclude Include="TableRecord.h" />
     <ClInclude Include="TableSchema.h" />

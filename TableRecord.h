@@ -8,6 +8,16 @@ class TableRecord
 {
 public:
 
+   TableRecord(List<string>* tableRecord, long cellWidth, long space, long totalColsCount, bool header, bool clossingCell)
+   {
+      this->tableRecord = tableRecord;
+      this->cellWidth = cellWidth;
+      this->space = space;
+      this->totalColsCount = totalColsCount;
+      this->header = header;
+      this->clossingCell = clossingCell;
+   }
+
    List<string>* getTableRecord()
    {
       return tableRecord;
@@ -30,7 +40,7 @@ public:
 
    long getSpace()
    {
-      return tableRecord->getSize();
+      return space;
    }
 
    bool isHeader()

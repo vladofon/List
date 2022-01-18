@@ -16,7 +16,8 @@ public:
    void add(T item) override
    {
       if (size >= capacity) {
-         extendArraySize();
+
+         int smth = extendArraySize();
       }
 
       elementData[size] = item;
@@ -31,33 +32,33 @@ public:
 
    void put(long index, T item) override
    {
-      if (size >= capacity) {
-         extendArraySize();
-      }
+      //if (size >= capacity) {
+      //   extendArraySize();
+      //}
 
-      T previous;
-      T current;
-      for (long i = index; i <= size; i++)
-      {
-         if (i == index)
-         {
-            current = elementData[i];
-            elementData[i] = item;
-         }
-         else if (i == index + 1)
-         {
-            previous = elementData[i];
-            elementData[i] = current;
-         }
-         else
-         {
-            current = previous;
-            previous = elementData[i];
-            elementData[i] = current;
-         }
-      }
+      //T previous;
+      //T current;
+      //for (long i = index; i <= size; i++)
+      //{
+      //   if (i == index)
+      //   {
+      //      current = elementData[i];
+      //      elementData[i] = item;
+      //   }
+      //   else if (i == index + 1)
+      //   {
+      //      previous = elementData[i];
+      //      elementData[i] = current;
+      //   }
+      //   else
+      //   {
+      //      current = previous;
+      //      previous = elementData[i];
+      //      elementData[i] = current;
+      //   }
+      //}
 
-      size++;
+      //size++;
    }
 
    void remove(long index) override
@@ -146,7 +147,7 @@ private:
 
    void copyArray(T* to, T* from, long size)
    {
-      for (long i = 0; i <= size; i++)
+      for (long i = 0; i < size; i++)
       {
          to[i] = from[i];
       }
@@ -162,7 +163,7 @@ private:
       delete[] from;
    }
 
-   void extendArraySize()
+   int extendArraySize()
    {
       long oldSize = capacity;
       increaseCapacity();
@@ -171,6 +172,8 @@ private:
       copyArray(newArray, elementData, oldSize);
 
       elementData = newArray;
+
+      return size;
    }
 
    void extendArraySize(long additionalSize)

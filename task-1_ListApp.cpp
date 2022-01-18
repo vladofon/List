@@ -4,15 +4,11 @@
 #include "LinkedList.h"
 #include "ArrayList.h"
 #include "Formatter.h"
+#include"TableSchema.h"
+#include"SchemaParser.h"
 #include "FencingCompetition.h"
 
 using namespace std;
-
-void assignIfBigger(long& to, long from)
-{
-   if (from > to)
-      to = from;
-}
 
 int main()
 {
@@ -43,12 +39,34 @@ int main()
    competition->setFirstTeam(firstTeam);
    competition->setSecondTeam(secondTeam);
 
+   List<string>* arr = new ArrayList<string>();
+   for (long i = 0; i < 20; i++)
+   {
+      arr->add(to_string(i));
+      cout << arr->get(i) << endl;
+   }
+
    Formatter* formatter = new Formatter(2, 5, "Fencers");
 
    List<Pair>* pairs = competition->makeDraw();
    firstTeam->merge(secondTeam);
 
-   cout << formatter->formatBySchema(firstTeam, pairs) << endl;
+   TableSchema* schema = new TableSchema();
+
+   schema->createRow("============+ Fencing competition +============");
+   schema->getRow(0).createColumn("List of participants");
+
+   //schema.createRow("Draw results");
+   //schema.getRow(0).createColumn("First team");
+   //schema.getRow(0).createColumn("Second team");
+
+   schema->fillColumn(0, 0, firstTeam);
+
+   SchemaParser parser = SchemaParser(*schema);
+
+   cout << parser.parseSchema() << endl;
+
+   //cout << formatter->formatBySchema(firstTeam, pairs) << endl;
 
    /* cout << formatter->format(competition->makeDraw()) << endl;*/
 

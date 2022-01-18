@@ -44,10 +44,10 @@
     <ClInclude Include="SchemaParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SchemaFormater.h">
+    <ClInclude Include="TableRecord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TableRecord.h">
+    <ClInclude Include="SchemaFormatter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

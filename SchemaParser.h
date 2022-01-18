@@ -1,11 +1,18 @@
 #pragma once
 #include"TableSchema.h"
+#include"TableRecord.h"
+#include"SchemaFormatter.h"
 #include"List.h"
 #include"ArrayList.h"
 
 class SchemaParser
 {
 public:
+
+   SchemaParser(TableSchema& schema)
+   {
+      this->schema = schema;
+   }
 
    string parseSchema()
    {
@@ -38,24 +45,19 @@ public:
 
          long maxColsCountInRow = schemaInfo.getMaxColumnCount();
 
+         // creating records in a table 
+         SchemaFormatter formatter = SchemaFormatter();
+
          /* creating row header */
-         table += createRow(rowHeader, cellWidth, maxColsCountInRow, true);
+         TableRecord* header = new TableRecord(rowHeader, cellWidth, space, maxColsCountInRow, true, false);
+         table += formatter.createRecord(header);
 
          /* creating row columns headers */
-         table += createRow(columnsHeaders, cellWidth, maxColsCountInRow, true);
+         TableRecord* column = new TableRecord(columnsHeaders, cellWidth, space, maxColsCountInRow, true, false);
+         table += formatter.createRecord(column);
 
          /* creating row body */
          createRecords(table, tableRecords, row, maxColsCountInRow);
-
-         for (long completedRow = 0; completedRow < tableRecords->getSize(); completedRow++)
-         {
-            List<string>* rowToCreate = tableRecords->get(completedRow);
-
-            if (row == schema.rowsCount() - 1 && completedRow == tableRecords->getSize() - 1)
-               table += createRow(rowToCreate, cellWidth, maxColsCountInRow, false, true);
-            else
-               table += createRow(rowToCreate, cellWidth, maxColsCountInRow, false);
-         }
       }
 
       return table;
@@ -64,6 +66,7 @@ public:
 private:
    TableSchema schema;
    long cellWidth;
+   long space = 2;
 
    class SchemaInfo
    {
@@ -204,11 +207,19 @@ private:
       for (long completedRow = 0; completedRow < tableRecords->getSize(); completedRow++)
       {
          List<string>* rowToCreate = tableRecords->get(completedRow);
+         SchemaFormatter formatter = SchemaFormatter();
 
          if (rowIndex == schema.rowsCount() - 1 && completedRow == tableRecords->getSize() - 1)
-            table += createRow(rowToCreate, cellWidth, maxColsCountInRow, false, true);
+         {
+            TableRecord* cells = new TableRecord(rowToCreate, cellWidth, space, maxColsCountInRow, false, true);
+            table += formatter.createRecord(cells);
+         }
          else
-            table += createRow(rowToCreate, cellWidth, maxColsCountInRow, false);
+         {
+            TableRecord* cells = new TableRecord(rowToCreate, cellWidth, space, maxColsCountInRow, false, false);
+            table += formatter.createRecord(cells);
+         }
+
       }
    }
 };
