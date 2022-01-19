@@ -152,7 +152,7 @@
   <ItemGroup>
     <ClInclude Include="ArrayList.h" />
     <ClInclude Include="FencingCompetition.h" />
-    <ClInclude Include="Formatter.h" />
+    <ClInclude Include="FencersFormatter.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Pair.h" />
