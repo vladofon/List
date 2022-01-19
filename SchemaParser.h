@@ -57,7 +57,7 @@ public:
          table += formatter.createRecord(column);
 
          /* creating row body */
-         createRecords(table, tableRecords, row, maxColsCountInRow);
+         createRecords(table, tableRecords, cellWidth, row, maxColsCountInRow);
       }
 
       return table;
@@ -65,7 +65,6 @@ public:
 
 private:
    TableSchema schema;
-   long cellWidth;
    long space = 2;
 
    class SchemaInfo
@@ -202,7 +201,7 @@ private:
       }
    }
 
-   void createRecords(string& table, List<List<string>*>* tableRecords, long rowIndex, long maxColsCountInRow)
+   void createRecords(string& table, List<List<string>*>* tableRecords, long cellWidth, long rowIndex, long maxColsCountInRow)
    {
       for (long completedRow = 0; completedRow < tableRecords->getSize(); completedRow++)
       {

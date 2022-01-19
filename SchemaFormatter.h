@@ -21,7 +21,7 @@ public:
 
       List<long>* paddings = new ArrayList<long>();
 
-      paddings = calcPaddings(info);
+      calcPaddings(paddings, info);
 
       string contentBody = "";
       long colsBordersCounter = info->getColsBorders();
@@ -96,17 +96,17 @@ private:
    public:
       RecordInfo(TableRecord* record)
       {
+         this->space = record->getSpace();
          this->tableRecord = record->getTableRecord();
          this->colsCount = record->getSize();
          this->totalColsCount = record->getTotalColsCount();
-         this->contentWidth = record->getCellWidth() * record->getTotalColsCount();
-         this->totalCellWidth = record->getCellWidth() * (record->getTotalColsCount() / colsCount);
-         this->colsBorders = colsCount - 1;
-         this->voidColsBorders = record->getTotalColsCount() - 1;
-         this->cellSpaces = record->getSize() * colsCount;
-         this->voidCellSpaces = record->getSize() * record->getTotalColsCount();
+         this->contentWidth = record->getCellWidth() * record->getTotalColsCount(); // ok
+         this->totalCellWidth = record->getCellWidth() * (record->getTotalColsCount() / colsCount); // ok
+         this->colsBorders = colsCount - 1; // ok
+         this->voidColsBorders = record->getTotalColsCount() - 1; // ok
+         this->cellSpaces = space * colsCount; // ok
+         this->voidCellSpaces = space * record->getTotalColsCount(); // ok
          this->width = contentWidth + voidCellSpaces + voidColsBorders;
-         this->space = record->getSpace();
          this->closingCell = record->isClossingCell();
          this->header = record->isHeader();
       }
@@ -199,17 +199,13 @@ private:
       return width - str.length();
    }
 
-   List<long>* calcPaddings(RecordInfo* info)
+   void calcPaddings(List<long>* paddings, RecordInfo* info)
    {
-      List<long>* paddings = new ArrayList<long>();
-
       for (long cell = 0; cell < info->getColsCount(); cell++)
       {
          long cellPadding = calcWhiteSpaces(info->getTableRecord()->get(cell), info->getTotalCellWidth() + (info->getVoidColsBorders() - info->getColsBorders()));
          paddings->add(cellPadding);
       }
-
-      return paddings;
    }
 
    string repeat(string symbol, long count)
