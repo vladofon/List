@@ -3,7 +3,6 @@
 #include <malloc.h>
 #include "LinkedList.h"
 #include "ArrayList.h"
-#include "Formatter.h"
 #include"TableSchema.h"
 #include"SchemaParser.h"
 #include "FencingCompetition.h"
@@ -39,8 +38,6 @@ int main()
    competition->setFirstTeam(firstTeam);
    competition->setSecondTeam(secondTeam);
 
-   Formatter* formatter = new Formatter(2, 5, "Fencers");
-
    List<Pair>* pairs = competition->makeDraw();
    firstTeam->merge(secondTeam);
 
@@ -62,10 +59,6 @@ int main()
    SchemaParser parser = SchemaParser(*schema);
 
    cout << parser.parseSchema() << endl;
-
-   //cout << formatter->formatBySchema(firstTeam, pairs) << endl;
-
-   /* cout << formatter->format(competition->makeDraw()) << endl;*/
 
    system("pause");
    return 0;

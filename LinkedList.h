@@ -1,6 +1,5 @@
 #pragma once
 #include "List.h"
-#include <malloc.h>
 
 template <class T>
 class LinkedList :public List<T>
