@@ -7,81 +7,19 @@
 
 using namespace std;
 
-// string createRow(List<string>* tableRecord, long cellWidth, long totalColsCount, bool isHeader, bool isClossingCell = false)
-
 class SchemaFormatter
 {
 public:
 
-   string createRecord(TableRecord* record)
+   string createRecord(TableRecord* recordData)
    {
-      string row = "";
+      RecordInfo* info = new RecordInfo(recordData);
 
-      RecordInfo* info = new RecordInfo(record);
+      string recordBody = generateRecordBody(info);
 
-      List<long>* paddings = new ArrayList<long>();
+      string border = generateBorder(info);
 
-      calcPaddings(paddings, info);
-
-      string contentBody = "";
-      long colsBordersCounter = info->getColsBorders();
-
-      for (long cell = 0; cell < info->getColsCount(); cell++)
-      {
-         long cellPadding = paddings->get(cell);
-         string cellSpace = repeat(SPACING, (info->getSpace() / 2) + (info->getTotalColsCount() - info->getColsCount()));
-
-         bool isPaddingEven = true;
-         if (cellPadding % 2 != 0)
-         {
-            cellPadding++;
-            isPaddingEven = false;
-         }
-
-         string content = info->getTableRecord()->get(cell);
-         string alignedContent;
-
-         if (info->isHeader())
-         {
-            string leftPadding = repeat(SPACING, (cellPadding / 2));
-            string rightPadding = (!isPaddingEven) ? repeat(SPACING, ((cellPadding - 1) / 2)) : repeat(SPACING, (cellPadding / 2));
-
-            alignedContent = (leftPadding + content + rightPadding);
-         }
-         else
-         {
-            alignedContent = (!isPaddingEven) ? (content + repeat(SPACING, cellPadding - 1)) : (content + repeat(SPACING, cellPadding));
-         }
-
-         contentBody += (cellSpace + alignedContent + cellSpace);
-
-         if (colsBordersCounter != 0)
-         {
-            contentBody += COL_FILLER;
-            colsBordersCounter--;
-         }
-
-      }
-
-      string rowBody = (COL_FILLER + contentBody + COL_FILLER) + ROW_SEPARATOR;
-
-      if (info->isHeader())
-      {
-         string verticalPadding = repeat(SPACING, contentBody.length());
-         string verticalPaddingBody = (COL_FILLER + verticalPadding + COL_FILLER) + ROW_SEPARATOR;
-
-         verticalPaddingBody = replaceAllCharsFromTo(rowBody, verticalPaddingBody, COL_FILLER);
-
-         rowBody = (verticalPaddingBody + rowBody + verticalPaddingBody);
-      }
-
-      string borderBody = repeat(ROW_FILLER, info->getWidth());
-
-      string border = (SEPARATOR + borderBody + SEPARATOR) + ROW_SEPARATOR;
-
-      (info->isClosingCell()) ? (row = border + rowBody + border) : (row = border + rowBody);
-
-      return row;
+      return assembleRecord(border, recordBody, info);
    }
 
 private:
@@ -199,13 +137,100 @@ private:
       return width - str.length();
    }
 
-   void calcPaddings(List<long>* paddings, RecordInfo* info)
+   List<long>* calcPaddings(RecordInfo* info)
    {
+      List<long>* paddings = new ArrayList<long>();
+
       for (long cell = 0; cell < info->getColsCount(); cell++)
       {
          long cellPadding = calcWhiteSpaces(info->getTableRecord()->get(cell), info->getTotalCellWidth() + (info->getVoidColsBorders() - info->getColsBorders()));
          paddings->add(cellPadding);
       }
+
+      return paddings;
+   }
+
+   string generateContentBody(List<long>* paddings, RecordInfo* info)
+   {
+      string contentBody = "";
+
+      long colsBordersCounter = info->getColsBorders();
+
+      for (long cell = 0; cell < info->getColsCount(); cell++)
+      {
+         long cellPadding = paddings->get(cell);
+         string cellSpace = repeat(SPACING, (info->getSpace() / 2) + (info->getTotalColsCount() - info->getColsCount()));
+
+         bool isPaddingEven = true;
+         if (cellPadding % 2 != 0)
+         {
+            cellPadding++;
+            isPaddingEven = false;
+         }
+
+         string content = info->getTableRecord()->get(cell);
+         string alignedContent;
+
+         if (info->isHeader())
+         {
+            string leftPadding = repeat(SPACING, (cellPadding / 2));
+            string rightPadding = (!isPaddingEven) ? repeat(SPACING, ((cellPadding - 1) / 2)) : repeat(SPACING, (cellPadding / 2));
+
+            alignedContent = (leftPadding + content + rightPadding);
+         }
+         else
+         {
+            alignedContent = (!isPaddingEven) ? (content + repeat(SPACING, cellPadding - 1)) : (content + repeat(SPACING, cellPadding));
+         }
+
+         contentBody += (cellSpace + alignedContent + cellSpace);
+
+         if (colsBordersCounter != 0)
+         {
+            contentBody += COL_FILLER;
+            colsBordersCounter--;
+         }
+      }
+
+      return contentBody;
+   }
+
+   string generateRecordBody(RecordInfo* info)
+   {
+      List<long>* paddings = calcPaddings(info);
+
+      string contentBody = generateContentBody(paddings, info);
+
+      string rowBody = (COL_FILLER + contentBody + COL_FILLER) + ROW_SEPARATOR;
+
+      if (info->isHeader())
+      {
+         rowBody = generateHeaderRowBody(contentBody, rowBody, info);
+      }
+
+      return rowBody;
+   }
+
+   string generateBorder(RecordInfo* info)
+   {
+      string borderBody = repeat(ROW_FILLER, info->getWidth());
+
+      return (SEPARATOR + borderBody + SEPARATOR) + ROW_SEPARATOR;
+   }
+
+   string generateHeaderRowBody(string contentBody, string rowBody, RecordInfo* info)
+   {
+      string verticalPadding = repeat(SPACING, contentBody.length());
+      string verticalPaddingBody = (COL_FILLER + verticalPadding + COL_FILLER) + ROW_SEPARATOR;
+
+      verticalPaddingBody = replaceAllCharsFromTo(rowBody, verticalPaddingBody, COL_FILLER);
+
+      return (verticalPaddingBody + rowBody + verticalPaddingBody);
+   }
+
+   string assembleRecord(string border, string recordBody, RecordInfo* info)
+   {
+      return (info->isClosingCell()) ? (border + recordBody + border) : (border + recordBody);
    }
 
    string repeat(string symbol, long count)

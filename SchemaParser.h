@@ -45,7 +45,8 @@ public:
 
          long maxColsCountInRow = schemaInfo.getMaxColumnCount();
 
-         // creating records in a table 
+
+         /* ===+ creating records in a table +=== */
          SchemaFormatter formatter = SchemaFormatter();
 
          /* creating row header */
