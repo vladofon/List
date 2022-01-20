@@ -86,6 +86,19 @@ public:
       delete list;
    }
 
+   bool contains(T item) override
+   {
+      //for (long i = 0; i < size; i++)
+      //{
+      //   if (elementData[i] == item)
+      //   {
+      //      return true;
+      //   }
+      //}
+
+      //return false;
+   }
+
    T get(long index)
    {
       return elementData[index];

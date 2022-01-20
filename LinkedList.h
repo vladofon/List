@@ -135,6 +135,22 @@ public:
       delete list;
    }
 
+   bool contains(T item) override
+   {
+      //Node* current = head;
+
+      //while (current->pNext != nullptr)
+      //{
+      //   if (current->item == item)
+      //   {
+      //      return true;
+      //   }
+      //   current = current->pNext;
+      //}
+
+      //return false;
+   }
+
    T* toArray() override
    {
       T* resultArray = new T[size];
@@ -184,6 +200,7 @@ public:
    }
 
 private:
+
    class Node
    {
    public:

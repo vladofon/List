@@ -46,6 +46,7 @@ public:
    }
 
 private:
+
    long countOfPairs;
    long maxRange;
    List<string>* firstTeam;

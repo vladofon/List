@@ -13,6 +13,8 @@ public:
 
    virtual void remove(long index) = 0;
 
+   virtual bool contains(T item) = 0;
+
    virtual void merge(List<T>* list) = 0;
 
    virtual T get(long index) = 0;
